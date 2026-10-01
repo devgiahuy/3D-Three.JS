@@ -12,7 +12,8 @@ export default function Bai1() {
 
     // 1. Tạo Scene & Camera
     const scene = new THREE.Scene(); // tạo scene
-    const camera = new THREE.PerspectiveCamera( // tạo camera 
+    const camera = new THREE.PerspectiveCamera(
+      // tạo camera
       75, // góc nhìn
       window.innerWidth / window.innerHeight, // tỷ lệ khung hình
       0.1, // điểm gần nhất thấy
@@ -21,7 +22,7 @@ export default function Bai1() {
     camera.position.z = 5; // lùi camera ra xa để nhìn thấy vật
 
     // 2. Tạo Renderer truyền trực tiếp thẻ canvas vào
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true }); 
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight); // điều chỉnh kích thước renderer
 
     // 3. Tạo hình lập phương (Mesh = Geometry + Material)

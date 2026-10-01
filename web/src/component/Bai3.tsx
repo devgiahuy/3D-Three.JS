@@ -1,259 +1,89 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
+import { useState } from 'react';
+import Demo01Static from './bai3/demo-01-static/Demo01Static';
+import Demo02RotationX from './bai3/demo-02-rotation-x/Demo02RotationX';
+import Demo03RotationY from './bai3/demo-03-rotation-y/Demo03RotationY';
+import Demo04RotationXY from './bai3/demo-04-rotation-xy/Demo04RotationXY';
+import Demo05AnimationFrame from './bai3/demo-05-request-animation-frame/Demo05AnimationFrame';
+import Demo06ElapsedTime from './bai3/demo-06-elapsed-time/Demo06ElapsedTime';
+import Demo07SinMotion from './bai3/demo-07-sin-motion/Demo07SinMotion';
+import Demo08CosMotion from './bai3/demo-08-cos-motion/Demo08CosMotion';
+import Demo09PointLight from './bai3/demo-09-point-light/Demo09PointLight';
+import Demo10PointLightCircle from './bai3/demo-10-point-light-circle/Demo10PointLightCircle';
+import Demo11PointLightEllipse from './bai3/demo-11-point-light-ellipse/Demo11PointLightEllipse';
+import Demo12PointLightVertical from './bai3/demo-12-point-light-vertical/Demo12PointLightVertical';
+import Demo13Complete from './bai3/demo-13-complete/Demo13Complete';
+
+const DEMOS = [
+  { id: 1, name: '01. Static Object', component: Demo01Static },
+  { id: 2, name: '02. Rotation X', component: Demo02RotationX },
+  { id: 3, name: '03. Rotation Y', component: Demo03RotationY },
+  { id: 4, name: '04. Rotation X + Y', component: Demo04RotationXY },
+  { id: 5, name: '05. requestAnimationFrame', component: Demo05AnimationFrame },
+  { id: 6, name: '06. Elapsed Time', component: Demo06ElapsedTime },
+  { id: 7, name: '07. Sin Motion', component: Demo07SinMotion },
+  { id: 8, name: '08. Cos Motion', component: Demo08CosMotion },
+  { id: 9, name: '09. PointLight Static', component: Demo09PointLight },
+  { id: 10, name: '10. PointLight Circle', component: Demo10PointLightCircle },
+  { id: 11, name: '11. PointLight Ellipse', component: Demo11PointLightEllipse },
+  { id: 12, name: '12. PointLight Vertical', component: Demo12PointLightVertical },
+  { id: 13, name: '13. Complete Demo', component: Demo13Complete },
+];
 
 export default function Bai3() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [activeDemoId, setActiveDemoId] = useState<number>(1);
 
-  // State điều khiển bật/tắt 3 loại đèn để người học dễ quan sát sự khác biệt
-  const [ambientOn, setAmbientOn] = useState(true);
-  const [directionalOn, setDirectionalOn] = useState(true);
-  const [pointOn, setPointOn] = useState(true);
-
-  // Dùng ref để truyền trạng thái bật/tắt vào vòng lặp Three.js mà không cần re-render scene
-  const lightsRef = useRef<{
-    ambient?: THREE.AmbientLight;
-    directional?: THREE.DirectionalLight;
-    point?: THREE.PointLight;
-    pointLightMesh?: THREE.Mesh;
-  }>({});
-
-  useEffect(() => {
-    if (lightsRef.current.ambient) lightsRef.current.ambient.visible = ambientOn;
-  }, [ambientOn]);
-
-  useEffect(() => {
-    if (lightsRef.current.directional) lightsRef.current.directional.visible = directionalOn;
-  }, [directionalOn]);
-
-  useEffect(() => {
-    if (lightsRef.current.point) lightsRef.current.point.visible = pointOn;
-    if (lightsRef.current.pointLightMesh) lightsRef.current.pointLightMesh.visible = pointOn;
-  }, [pointOn]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // 1. Khởi tạo Scene
-    const scene = new THREE.Scene();
-
-    // 2. Camera
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    camera.position.set(0, 1.5, 6);
-    camera.lookAt(0, 0, 0);
-
-    // 3. Renderer (Bật hỗ trợ đổ bóng nếu cần)
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    // ==========================================
-    // 4. VẬT LIỆU MESH STANDARD MATERIAL (PBR)
-    // ==========================================
-    // Lưu ý: MeshStandardMaterial CẦN CÓ ÁNH SÁNG để hiển thị (nếu tắt hết đèn sẽ tối đen)
-
-    // --- Box (Đỏ) ---
-    const boxGeometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
-    const boxMaterial = new THREE.MeshStandardMaterial({
-      color: 0xff3366,
-      roughness: 0.3, // độ nhám (càng thấp càng bóng)
-      metalness: 0.2, // độ kim loại
-    });
-    const box = new THREE.Mesh(boxGeometry, boxMaterial);
-    box.position.x = -2.5;
-    scene.add(box);
-
-    // --- Sphere (Xanh Ngọc) ---
-    const sphereGeometry = new THREE.SphereGeometry(0.8, 64, 32);
-    const sphereMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00d2ff,
-      roughness: 0.1, // rất bóng
-      metalness: 0.6, // hiệu ứng kim loại rõ rệt
-    });
-    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    sphere.position.x = 0;
-    scene.add(sphere);
-
-    // --- Cone (Cam Vàng) ---
-    const coneGeometry = new THREE.ConeGeometry(0.8, 1.6, 32);
-    const coneMaterial = new THREE.MeshStandardMaterial({
-      color: 0xffaa00,
-      roughness: 0.5,
-      metalness: 0.1,
-    });
-    const cone = new THREE.Mesh(coneGeometry, coneMaterial);
-    cone.position.x = 2.5;
-    scene.add(cone);
-
-    // --- Mặt sàn (Plane) để quan sát ánh sáng tỏa ra nền ---
-    const floorGeometry = new THREE.PlaneGeometry(12, 6);
-    const floorMaterial = new THREE.MeshStandardMaterial({
-      color: 0x222222,
-      roughness: 0.8,
-    });
-    const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-    floor.rotation.x = -Math.PI / 2;
-    floor.position.y = -1.2;
-    scene.add(floor);
-
-    // ==========================================
-    // 5. THÊM 3 LOẠI LIGHT VÀO SCENE
-    // ==========================================
-
-    // --- Đèn 1: AmbientLight (Ánh sáng môi trường) ---
-    // Tỏa đều mọi hướng, không bóng đổ, giúp vật thể không bị đen ngòm ở vùng khuất
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // cường độ nhẹ 0.3
-    scene.add(ambientLight);
-    lightsRef.current.ambient = ambientLight;
-
-    // --- Đèn 2: DirectionalLight (Ánh nắng / ánh sáng có hướng) ---
-    // Các tia sáng song song, tạo tương phản sáng/tối rõ rệt
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
-    directionalLight.position.set(5, 5, 4);
-    scene.add(directionalLight);
-    lightsRef.current.directional = directionalLight;
-
-    // --- Đèn 3: PointLight (Đèn bóng tròn / điểm sáng cục bộ) ---
-    // Phát ra từ 1 điểm, cường độ giảm dần theo khoảng cách
-    const pointLight = new THREE.PointLight(0xff00ff, 4, 10); // Ánh sáng màu hồng tím rực rỡ
-    pointLight.position.set(0, 1, 2);
-    scene.add(pointLight);
-    lightsRef.current.point = pointLight;
-
-    // Quả cầu nhỏ hiển thị vị trí của PointLight để dễ quan sát nguồn phát
-    const pointHelperGeometry = new THREE.SphereGeometry(0.08, 16, 8);
-    const pointHelperMaterial = new THREE.MeshBasicMaterial({ color: 0xff00ff });
-    const pointLightMesh = new THREE.Mesh(pointHelperGeometry, pointHelperMaterial);
-    pointLight.add(pointLightMesh);
-    lightsRef.current.pointLightMesh = pointLightMesh;
-
-    // ==========================================
-    // 6. ANIMATION LOOP
-    // ==========================================
-    let animationFrameId: number;
-    let clock = new THREE.Clock();
-
-    const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
-
-      // Xoay các vật thể
-      box.rotation.x += 0.01;
-      box.rotation.y += 0.01;
-
-      sphere.rotation.y += 0.01;
-
-      cone.rotation.x += 0.01;
-      cone.rotation.y += 0.01;
-
-      // Di chuyển PointLight bay lượn hình số 8 xung quanh các vật thể để thấy rõ ánh sáng cục bộ
-      pointLight.position.x = Math.sin(elapsedTime * 1.5) * 3;
-      pointLight.position.z = Math.cos(elapsedTime * 1.5) * 2 + 1;
-      pointLight.position.y = Math.sin(elapsedTime * 3) * 0.8 + 0.5;
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    // ==========================================
-    // 7. RESIZE VÀ CLEANUP
-    // ==========================================
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
-
-      renderer.dispose();
-      boxGeometry.dispose();
-      boxMaterial.dispose();
-      sphereGeometry.dispose();
-      sphereMaterial.dispose();
-      coneGeometry.dispose();
-      coneMaterial.dispose();
-      floorGeometry.dispose();
-      floorMaterial.dispose();
-      pointHelperGeometry.dispose();
-      pointHelperMaterial.dispose();
-    };
-  }, []);
+  const ActiveComponent = DEMOS.find((d) => d.id === activeDemoId)?.component || Demo01Static;
 
   return (
-    <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-      {/* Bảng điều khiển bật/tắt đèn trực quan để quan sát sự khác biệt */}
+    <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
+      {/* Top Navigation Bar to select demos */}
       <div
         style={{
           position: 'absolute',
-          top: 20,
-          left: 20,
-          color: '#ffffff',
-          fontFamily: 'sans-serif',
-          zIndex: 10,
-          background: 'rgba(20, 20, 30, 0.85)',
-          backdropFilter: 'blur(8px)',
-          border: '1px solid rgba(255,255,255,0.15)',
-          padding: '16px 20px',
+          top: 15,
+          right: 20,
+          zIndex: 100,
+          background: 'rgba(15, 23, 42, 0.9)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
           borderRadius: '12px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
-          maxWidth: '360px',
+          padding: '8px 14px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
         }}
       >
-        <h3 style={{ margin: '0 0 8px 0', fontSize: '17px', color: '#60a5fa' }}>
-          Ngày 3: StandardMaterial & 3 Loại Light
-        </h3>
-        <p style={{ margin: '0 0 14px 0', fontSize: '13px', color: '#cbd5e1', lineHeight: '1.4' }}>
-          Vật liệu <code>MeshStandardMaterial</code> cần có ánh sáng. Hãy thử bật/tắt các loại đèn bên dưới để quan sát:
-        </p>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px' }}>
-            <input
-              type="checkbox"
-              checked={ambientOn}
-              onChange={(e) => setAmbientOn(e.target.checked)}
-            />
-            <span><strong>AmbientLight:</strong> Ánh sáng nền đều (chống tối đen)</span>
-          </label>
-
-          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px' }}>
-            <input
-              type="checkbox"
-              checked={directionalOn}
-              onChange={(e) => setDirectionalOn(e.target.checked)}
-            />
-            <span><strong>DirectionalLight:</strong> Ánh nắng chiếu xiên (tạo khối)</span>
-          </label>
-
-          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '14px' }}>
-            <input
-              type="checkbox"
-              checked={pointOn}
-              onChange={(e) => setPointOn(e.target.checked)}
-            />
-            <span><strong>PointLight:</strong> Điểm sáng tím di chuyển (cục bộ)</span>
-          </label>
-        </div>
-
-        {(!ambientOn && !directionalOn && !pointOn) && (
-          <div style={{ marginTop: '12px', padding: '8px', background: '#e11d48', borderRadius: '6px', fontSize: '12px' }}>
-            ⚠️ <strong>Lỗi kinh điển:</strong> Khi tắt toàn bộ đèn, StandardMaterial sẽ biến thành màn hình đen hoàn toàn!
-          </div>
-        )}
+        <label style={{ color: '#94a3b8', fontSize: '13px', fontWeight: 'bold', fontFamily: 'sans-serif' }}>
+          Chọn Demo Bài 3:
+        </label>
+        <select
+          value={activeDemoId}
+          onChange={(e) => setActiveDemoId(Number(e.target.value))}
+          style={{
+            background: '#1e293b',
+            color: '#38bdf8',
+            border: '1px solid #334155',
+            borderRadius: '8px',
+            padding: '6px 12px',
+            fontSize: '13px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            outline: 'none',
+          }}
+        >
+          {DEMOS.map((demo) => (
+            <option key={demo.id} value={demo.id}>
+              {demo.name}
+            </option>
+          ))}
+        </select>
       </div>
 
-      <canvas ref={canvasRef} />
+      {/* Render Active Demo Component */}
+      <ActiveComponent />
     </div>
   );
 }

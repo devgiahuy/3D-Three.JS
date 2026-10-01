@@ -72,9 +72,9 @@
 
 ### 4.4. Ngày 4 — Hệ Tọa Độ & Transform
 
-- [ ] Học: trục X/Y/Z, `position`, `rotation` (đơn vị **radian**), `scale`.
-- [ ] Học: cha-con (group) — xoay group là xoay cả con.
-- [ ] Bài tập: dựng 1 "chướng ngại vật" = 2 trụ + 1 thanh ngang bằng transform.
+- [x] Học: trục X/Y/Z, `position`, `rotation` (đơn vị **radian**), `scale`.
+- [x] Học: cha-con (group) — xoay group là xoay cả con.
+- [x] Bài tập: dựng 1 "chướng ngại vật" = 2 trụ + 1 thanh ngang bằng transform.
 
 ### 4.5. Ngày 5 — Animation Loop
 
