@@ -65,3 +65,17 @@ Trong **Three.js Docs** (mục _Materials_) và **Three.js Manual** (mục _Mate
 - **MeshStandardMaterial**:
   - **Đặc điểm:** Vật liệu tiêu chuẩn PBR (_Physically Based Rendering_) giúp mô phỏng chất liệu thực tế (kim loại, nhựa, gỗ...)[3][4].
   - **Sử dụng:** **Bắt buộc phải có nguồn sáng (** **Light** **)** trong Scene thì mới hiển thị được độ đổ bóng và phản xạ[3].
+
+### 1\. Phân biệt 3 loại đèn phổ biến (`Lights`)
+
+- **AmbientLight** **(Ánh sáng môi trường / Ánh sáng nền):**[1]
+  - **Đặc điểm:** Tỏa đều ánh sáng lên **tất cả mặt** của mọi vật thể trong Scene từ mọi hướng.
+  - **Tính chất:** Không có vị trí cụ thể, **không tạo bóng đổ** (no shadows).
+  - **Mục đích:** Dùng làm ánh sáng nền nhẹ để các vùng tối của vật thể không bị đen hoàn toàn.
+- **DirectionalLight** **(Ánh sáng có hướng / Ánh nắng mặt trời):**[1]
+  - **Đặc điểm:** Các tia sáng chiếu **song song** theo một hướng nhất định từ khoảng cách xa vô tận (giống như ánh mặt trời).[1]
+  - **Tính chất:** Tạo hiệu ứng sáng/tối rõ rệt giữa các mặt và **có thể tạo bóng đổ**.[1]
+  - **Mục đích:** Dùng làm nguồn sáng chính (Key Light) cho khung cảnh.
+- **PointLight** **(Ánh sáng điểm / Đèn cục bộ):**[1]
+  - **Đặc điểm:** Phát ra ánh sáng từ **một điểm** lan tỏa ra mọi hướng xung quanh (như bóng đèn tròn, ngọn nến, hay đom đóm).[1]
+  - **Tính chất:** Cường độ sáng sẽ **giảm dần theo khoảng cách** (decay) và có thể tạo bóng đổ.
