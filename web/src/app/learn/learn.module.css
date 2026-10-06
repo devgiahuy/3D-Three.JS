@@ -1,0 +1,77 @@
+.themeRoot {
+  --learn-bg: #f1f5f9;
+  --learn-surface: #ffffff;
+  --learn-raised: #f8fafc;
+  --learn-text: #0f172a;
+  --learn-muted: #475569;
+  --learn-border: #cbd5e1;
+  --learn-accent: #0369a1;
+  --learn-accent-soft: #e0f2fe;
+  --learn-accent-border: #bae6fd;
+  --learn-focus: #0284c7;
+  min-height: 100vh;
+  color: var(--learn-text);
+  background: var(--learn-bg);
+  color-scheme: light;
+}
+
+.themeRoot[data-learning-theme='dark'] {
+  --learn-bg: #0b1120;
+  --learn-surface: #151f32;
+  --learn-raised: #1c2a41;
+  --learn-text: #e8eef7;
+  --learn-muted: #b6c4d8;
+  --learn-border: #35445d;
+  --learn-accent: #7dd3fc;
+  --learn-accent-soft: #102b43;
+  --learn-accent-border: #235471;
+  --learn-focus: #38bdf8;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  .themeRoot[data-learning-theme='system'] {
+    --learn-bg: #0b1120;
+    --learn-surface: #151f32;
+    --learn-raised: #1c2a41;
+    --learn-text: #e8eef7;
+    --learn-muted: #b6c4d8;
+    --learn-border: #35445d;
+    --learn-accent: #7dd3fc;
+    --learn-accent-soft: #102b43;
+    --learn-accent-border: #235471;
+    --learn-focus: #38bdf8;
+    color-scheme: dark;
+  }
+}
+
+.page { width: min(1100px, 100%); margin: 0 auto; padding: 32px 22px 70px; color: var(--learn-text); line-height: 1.7; }
+.shell { min-height: 100vh; background: var(--learn-bg); }
+.eyebrow { color: var(--learn-accent); font-weight: 700; font-size: 14px; letter-spacing: .04em; margin-bottom: 10px; }
+.page h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.2; margin: 14px 0 20px; }
+.page h2 { font-size: 22px; line-height: 1.4; margin-bottom: 12px; }
+.page p { margin: 12px 0; }
+.page code { font-size: .88em; word-break: break-word; color: var(--learn-accent); background: var(--learn-accent-soft); padding: 2px 5px; border-radius: 4px; }
+.nav { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 28px; }
+.navActions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.nav a, .action { display: inline-block; padding: 11px 16px; background: var(--learn-surface); border: 1px solid var(--learn-border); border-radius: 10px; color: var(--learn-accent); font-weight: 600; }
+.nav a:hover, .action:hover { background: var(--learn-raised); border-color: var(--learn-focus); }
+.notice { margin: 24px 0; padding: 20px 24px; background: var(--learn-accent-soft); border: 1px solid var(--learn-accent-border); border-radius: 14px; }
+.flow { background: var(--learn-surface); border: 1px solid var(--learn-border); border-radius: 14px; padding: 20px 24px; margin: 20px 0; }
+.flow ol { padding-left: 24px; }
+.flow li { padding: 5px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 16px; margin: 24px 0; }
+.card { display: block; background: var(--learn-surface); border: 1px solid var(--learn-border); border-radius: 14px; padding: 22px; transition: border-color .15s, background-color .15s; }
+.card:hover { border-color: var(--learn-focus); background: var(--learn-raised); }
+.card strong { display: block; font-size: 20px; margin: 8px 0; }
+.card p { color: var(--learn-muted); }
+.badge { font-size: 12px; color: var(--learn-accent); background: var(--learn-accent-soft); border-radius: 20px; padding: 4px 9px; display: inline-block; }
+.files { padding: 18px 22px; margin: 24px 0; border: 1px solid var(--learn-border); border-radius: 14px; background: var(--learn-surface); }
+.footer { display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap; margin-top: 30px; }
+.page a:focus-visible, .page button:focus-visible, .page select:focus-visible { outline: 3px solid var(--learn-focus); outline-offset: 3px; }
+.themeToggle { display: inline-flex; gap: 4px; padding: 4px; background: var(--learn-surface); border: 1px solid var(--learn-border); border-radius: 12px; }
+.themeToggle button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 8px 12px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--learn-muted); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.themeToggle button[aria-pressed='true'] { background: var(--learn-accent-soft); color: var(--learn-accent); border-color: var(--learn-accent-border); }
+.themeToggle button:hover { color: var(--learn-accent); background: var(--learn-raised); }
+.themeToggle svg { width: 18px; height: 18px; flex-shrink: 0; }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }

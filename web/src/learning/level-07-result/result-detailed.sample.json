@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "activityType": "OBSTACLE_COURSE",
+  "mode": "RESULT",
+  "result": {
+    "score": 85,
+    "durationSeconds": 72,
+    "completedObjectIds": [
+      "hurdle_01",
+      "hoop_01"
+    ],
+    "failedObjectIds": [
+      "cone_01"
+    ],
+    "penalties": [
+      {
+        "objectId": "cone_01",
+        "points": 5,
+        "reason": "Đi sai hướng"
+      }
+    ]
+  }
+}

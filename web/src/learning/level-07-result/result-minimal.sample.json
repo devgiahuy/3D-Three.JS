@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0",
+  "activityType": "OBSTACLE_COURSE",
+  "mode": "RESULT",
+  "result": {
+    "score": 85,
+    "durationSeconds": 72
+  }
+}

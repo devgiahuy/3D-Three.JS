@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0",
+  "activityType": "OBSTACLE_COURSE",
+  "mode": "GUIDE",
+  "objects": [
+    {
+      "id": "start_line",
+      "modelId": "start_line_primitive",
+      "position": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "hurdle_01",
+      "modelId": "hurdle_primitive",
+      "position": [
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "id": "character_01",
+      "modelId": "character_primitive",
+      "position": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "finish_line",
+      "modelId": "finish_line_primitive",
+      "position": [
+        0,
+        0,
+        8
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "ready",
+      "title": "Đứng ở vạch xuất phát",
+      "instruction": "Con đứng sau vạch và chờ hiệu lệnh.",
+      "highlightObjectIds": [
+        "start_line"
+      ],
+      "animation": "character_ready",
+      "durationMs": 3000
+    },
+    {
+      "id": "jump",
+      "title": "Vượt thanh chắn",
+      "instruction": "Con bật nhảy qua thanh chắn.",
+      "highlightObjectIds": [
+        "hurdle_01"
+      ],
+      "animation": "character_jump",
+      "durationMs": 4000
+    }
+  ]
+}
