@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "activityType": "OBSTACLE_COURSE",
+  "mode": "GUIDE",
+  "objects": [
+    {
+      "id": "start_line_second",
+      "modelId": "start_line_primitive",
+      "position": [0, 0, -2]
+    },
+    {
+      "id": "hurdle_second_01",
+      "modelId": "hurdle_primitive",
+      "position": [-1, 0, 1]
+    },
+    {
+      "id": "hurdle_second_02",
+      "modelId": "hurdle_primitive",
+      "position": [1, 0, 4]
+    },
+    {
+      "id": "finish_line_second",
+      "modelId": "finish_line_primitive",
+      "position": [0, 0, 7]
+    }
+  ],
+  "steps": []
+}

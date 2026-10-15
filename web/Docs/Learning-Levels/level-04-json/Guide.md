@@ -10,6 +10,39 @@ Tạo scene tĩnh từ dữ liệu. Chưa chạy steps. JSON chỉ mô tả vậ
 
 File làm bài: `src/learning/level-04-json/Exercise.tsx`. Dữ liệu gợi ý: `scene.sample.json` cùng thư mục. Đây là fixture học tập, không phải contract backend đã chốt.
 
+Giải thích chi tiết luồng chạy của các file: [`Code-Flow.md`](./Code-Flow.md).
+
+## Cấu trúc gần production dùng trong bài
+
+```text
+level-04-json/
+├── Exercise.tsx                    # Server Component: nạp và kiểm tra JSON
+├── scene.sample.json               # Fixture scene thứ nhất
+├── scene.second.json               # Fixture kiểm tra khả năng tái sử dụng
+├── helpers/
+│   ├── scene.types.ts              # Kiểu dữ liệu đã được xác nhận
+│   ├── validate-scene.ts           # unknown -> SceneData hoặc danh sách lỗi
+│   └── model-registry.ts           # modelId -> component primitive
+└── components/
+    ├── scene-primitives.tsx         # Các model primitive tái sử dụng
+    ├── SceneRenderer.tsx            # Render SceneObject[] bằng registry
+    └── SceneExperience.tsx          # Client boundary chứa Canvas và UI chọn scene
+```
+
+Luồng xử lý:
+
+```text
+JSON thô (unknown)
+  -> validateScene
+  -> SceneData đã an toàn
+  -> SceneExperience (Canvas)
+  -> SceneRenderer map từng object
+  -> getModelComponent(modelId)
+  -> primitive tương ứng hoặc UnknownModel
+```
+
+`Exercise.tsx` không có `'use client'`: fixture được kiểm tra trước khi truyền vào phần WebGL. `SceneExperience.tsx` là client boundary nhỏ nhất vì Canvas, theme và selector cần trình duyệt. Dữ liệu đi qua boundary chỉ gồm object/array/string/number nên có thể serialize. Khi nối backend ở Level 08, thay nguồn JSON nhưng giữ nguyên validator và renderer.
+
 ## Bài 04.1 — Từ mảng sang mesh
 
 1. Tạo mảng hai object id khác nhau.

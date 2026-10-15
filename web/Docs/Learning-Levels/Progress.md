@@ -2,6 +2,8 @@
 
 Không đánh dấu hoàn thành chỉ vì code mẫu đã có hoặc demo đã chạy.
 
+Nhật ký chi tiết phần đã làm và phần cần tự kiểm tra: [Learning-Log.md](Learning-Log.md).
+
 - [ ] **Level 00 — Cách học và môi trường**: đạt checkpoint trong [level-00-start/Guide.md](level-00-start/Guide.md).
 - [ ] **Level 01 — Ôn object và transform**: đạt checkpoint trong [level-01-objects/Guide.md](level-01-objects/Guide.md).
 - [ ] **Level 02 — Hiểu chuyển động từ đầu**: đạt checkpoint trong [level-02-animation/Guide.md](level-02-animation/Guide.md).
