@@ -9,14 +9,20 @@ import {
 
 const MAX_SCENE_OBJECTS = 500;
 
+// kiểm tra giá trị có phải object, khác null và không phải array.
+//  hàm này dùng cho scene gốc và từng phần tử tỏng object
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
+// kiểm tra giá trị là chuỗi và trim() vẫn có ký tự
+//  hàm này dùng cho id và modelId
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+// kiểm tra giá trị có phải là mảng có đúng 3 số hữu hạn [x, y, z]
+//  vd [0, 0, 3] hợp lệ, còn [0, "sai", 3] ko hợp lệ
 function isPosition3D(value: unknown): value is Position3D {
   return (
     Array.isArray(value) &&
@@ -25,6 +31,13 @@ function isPosition3D(value: unknown): value is Position3D {
   );
 }
 
+// 1.Kiểm tra scene gốc là object; sai thì trả lỗi tại $.
+// 2.Kiểm tra schemaVersion đúng "1.0"; sai thì trả lỗi ngay.
+// 3.Kiểm tra objects là array và có tối đa 500 phần tử.
+// 4.Tạo Set để nhớ các id đã gặp, array objects để chứa vật thể hợp lệ và array issues để gom lỗi.
+// 5.Duyệt từng phần tử. Nếu phần tử không phải object thì báo lỗi. Nếu là object, hàm lần lượt kiểm tra id không rỗng, id không trùng, modelId không rỗng và position hợp lệ.
+// 6.Chỉ khi một phần tử vượt qua mọi kiểm tra, hàm mới thêm { id, modelId, position } vào array kết quả. Cú pháp [...rawObject.position] tạo array tọa độ mới.
+// 7.Nếu có bất kỳ issue nào, trả { ok: false, issues }. Nếu không, trả { ok: true, data }.
 export function validateScene(value: unknown): SceneValidationResult {
   if (!isRecord(value)) {
     return {

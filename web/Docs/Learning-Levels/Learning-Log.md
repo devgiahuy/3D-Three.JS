@@ -5,10 +5,10 @@ Tài liệu này ghi lại phần code đã thực hiện, kiến thức đã đ
 ## Trạng thái hiện tại
 
 - Ngày cập nhật: 2026-10-15.
-- Đang học: Level 04 — Dựng scene từ JSON.
+- Đã hoàn thành: Level 04 — Dựng scene từ JSON.
 - Code đã triển khai đến hết nội dung hướng dẫn Level 04.
-- Checkpoint tự giải thích và tự thử dữ liệu lỗi của Level 04: chưa xác nhận hoàn tất.
-- Level tiếp theo sau khi tự kiểm tra: Level 05 — Guide Mode theo từng bước.
+- Checkpoint Level 04: đã xác nhận hoàn tất.
+- Level tiếp theo: Level 05 — Guide Mode theo từng bước.
 
 ## Level 03 — Chuyển sang React Three Fiber
 
@@ -113,9 +113,9 @@ Ví dụ hai hurdle có thể cùng `modelId = "hurdle_primitive"`, nhưng phả
 - ESLint: đạt.
 - Next.js production build: đạt.
 
-### Chưa tự xác nhận checkpoint
+### Trạng thái checkpoint
 
-Trước khi đánh dấu hoàn thành Level 04, tự thực hiện lần lượt:
+Người học đã xác nhận hoàn thành Level 04. Các bài test JSON lỗi bên dưới vẫn có thể dùng để ôn lại khi cần:
 
 - [ ] Thêm một field lạ và xác nhận scene vẫn chạy.
 - [ ] Dùng `modelId` chưa đăng ký và xác nhận placeholder đỏ xuất hiện.
@@ -134,8 +134,6 @@ Trước khi đánh dấu hoàn thành Level 04, tự thực hiện lần lượ
 
 ## Việc nên làm tiếp theo
 
-1. Chạy các test JSON lỗi trong checklist Level 04.
-2. Khôi phục JSON hợp lệ sau mỗi test.
-3. Ghi kết quả quan sát vào `level-04-json/Notes.md`.
-4. Chỉ đánh dấu Level 04 hoàn thành khi có thể tự giải thích luồng JSON → validator → renderer → registry.
-5. Sau đó mới chuyển sang Level 05.
+1. Bắt đầu Level 05 — Guide Mode theo từng bước.
+2. Học cách chạy `steps`, highlight object, camera theo từng bước và animation guide.
+3. Ghi biến thể tự viết, công thức tự giải thích và điều còn chưa rõ vào `level-05-guide/Notes.md`.
